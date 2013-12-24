@@ -8,7 +8,7 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name ="Recept.findAll", query = "SELECT m FROM Recept m"),
+    @NamedQuery(name ="ReceptStap.findAll", query = "SELECT m FROM ReceptStap m"),
     @NamedQuery(name = "ReceptStap.findById", query = "SELECT e FROM ReceptStap e WHERE e.receptId = :receptid"),
   })
 

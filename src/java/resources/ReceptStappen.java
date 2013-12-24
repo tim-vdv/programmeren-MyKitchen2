@@ -45,6 +45,16 @@ public class ReceptStappen {
         return query.getResultList();
     }
     
+    @GET
+    @Path("/receptstappen")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ReceptStap> getReceptStappen(@QueryParam("start")@DefaultValue("0")int start,@QueryParam("results")@DefaultValue("10")int results){
+        TypedQuery<ReceptStap> query =  em.createNamedQuery("ReceptStap.findAll", ReceptStap.class);
+        query.setFirstResult(start);
+        query.setMaxResults(results);
+        return query.getResultList();
+    }
+    
     public long getIngredientId() {
         return ingredientId;
     }

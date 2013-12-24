@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -14,6 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 @Path("ingredienten")
 @Transactional
@@ -39,6 +41,17 @@ public class Ingredienten {
         Ingredient ingredient = em.find(Ingredient.class, id);
 
         return Response.ok(ingredient).build();
-    } 
+    }
+    
+    @DELETE
+    @Path("{ingredientid}")
+    public Response deleteMessage(@PathParam("ingredientid") long id)
+    {
+        Ingredient ingredient = em.find(Ingredient.class, id);
+
+        em.remove(ingredient);
+        
+        return Response.status(Status.NO_CONTENT).build();
+    }
     
 }

@@ -21,9 +21,6 @@ public class Ingredienten {
     
     @PersistenceContext
     private EntityManager em;
-    
-    private long ingredientId;
-    private String ingredientNaam;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -42,19 +39,6 @@ public class Ingredienten {
         Ingredient ingredient = em.find(Ingredient.class, id);
 
         return Response.ok(ingredient).build();
-    }
-
-    public void setIngredientId(long ingredientId) {
-        this.ingredientId = ingredientId;
-    }
-
-    public String getIngredientNaam() {
-        return ingredientNaam;
-    }
-
-    public void setIngredientNaam(String ingredientNaam) {
-        this.ingredientNaam = ingredientNaam;
-    }
-    
+    } 
     
 }

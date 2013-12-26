@@ -1,3 +1,5 @@
+package json;
+
 import domain.Ingredient;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,10 +27,15 @@ public class IngredientReader implements MessageBodyReader<Ingredient>{
         JsonReader reader = Json.createReader(entityStream);
         JsonObject jsonMessage = reader.readObject();
         
-        Ingredient ingredient = new Ingredient();
+        System.out.println("info " + jsonMessage);
         
+        Ingredient ingredient = new Ingredient();
+
+        ingredient.setId(ingredient.getId());
         ingredient.setNaam(jsonMessage.getString("naam"));
+        System.out.println(jsonMessage.getString("naam"));
         return ingredient;
+        
     }
     
 }

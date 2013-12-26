@@ -32,7 +32,6 @@ import javax.ws.rs.ext.Provider;
     @Override
     public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType)
     {
-        System.out.println("Dit is de writer");
         return Ingredient.class.isAssignableFrom(type);
     }
 

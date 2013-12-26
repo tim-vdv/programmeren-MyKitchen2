@@ -11,7 +11,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
-import static javax.ws.rs.HttpMethod.PUT;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -31,10 +30,8 @@ public class Ingredienten {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Ingredient> getAllIngredienten(@QueryParam("start")@DefaultValue("0")int start,@QueryParam("results")@DefaultValue("10")int results){
+    public List<Ingredient> getAllIngredienten(){
         TypedQuery<Ingredient> query =  em.createNamedQuery("Ingredient.findAll", Ingredient.class);
-        query.setFirstResult(start);
-        query.setMaxResults(results);
         return query.getResultList();
     }
     

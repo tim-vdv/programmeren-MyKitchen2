@@ -1,5 +1,6 @@
 package json;
 
+import domain.Gebruiker;
 import domain.Ingredient;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,24 +18,25 @@ import javax.ws.rs.ext.Provider;
 
 @Provider
 @Consumes(MediaType.APPLICATION_JSON)
-public class IngredientReader implements MessageBodyReader<Ingredient>{
+public class GebruikerReader implements MessageBodyReader<Gebruiker>{
 
     public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
         return Ingredient.class.isAssignableFrom(type);
     }
     
-    public Ingredient readFrom(Class<Ingredient> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, String> httpHeaders, InputStream entityStream) throws IOException, WebApplicationException {
+    public Gebruiker readFrom(Class<Gebruiker> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, String> httpHeaders, InputStream entityStream) throws IOException, WebApplicationException {
         JsonReader reader = Json.createReader(entityStream);
         JsonObject jsonMessage = reader.readObject();
         
-        System.out.println("info " + jsonMessage);
         
-        Ingredient ingredient = new Ingredient();
+        Gebruiker gebruiker = new Gebruiker();
 
-        //ingredient.setId(ingredient.getId());
-        ingredient.setNaam(jsonMessage.getString("naam"));
-        System.out.println(jsonMessage.getString("naam"));
-        return ingredient;
+        gebruiker.setId(gebruiker.getId());
+        gebruiker.setEmail(jsonMessage.getString("email"));
+        gebruiker.setWachtwoord(jsonMessage.getString("wachtwoord"));
+        gebruiker.setFavorieten(jsonMessage.getString("favorieten"));
+        gebruiker.setKoelkast(jsonMessage.getString("koelkast"));
+        return gebruiker;
         
     }
     

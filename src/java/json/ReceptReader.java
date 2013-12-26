@@ -28,6 +28,8 @@ public class ReceptReader implements MessageBodyReader<Recept>{
         Recept recept = new Recept();
         
         recept.setNaam(jsonMessage.getString("naam"));
+        recept.setKookBeschrijving(jsonMessage.getString("kookBeschrijving"));
+        recept.setReceptBeschrijving(jsonMessage.getString("receptBeschrijving"));
         return recept;
     }
     

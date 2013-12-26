@@ -28,6 +28,8 @@ public class ReceptStapReader implements MessageBodyReader<ReceptStap>{
         ReceptStap receptStap = new ReceptStap();
         
         receptStap.setHoeveelheid(jsonMessage.getInt("hoeveelheid"));
+        receptStap.setIngredientId(jsonMessage.getInt("ingredientId"));
+        receptStap.setReceptId(jsonMessage.getInt("receptId"));
         return receptStap;
     }
     

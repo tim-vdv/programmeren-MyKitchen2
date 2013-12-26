@@ -10,6 +10,7 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(name ="ReceptStap.findAll", query = "SELECT m FROM ReceptStap m"),
     @NamedQuery(name = "ReceptStap.findById", query = "SELECT e FROM ReceptStap e WHERE e.receptId = :receptid"),
+    @NamedQuery(name = "ReceptStap.findById1", query = "SELECT r FROM ReceptStap r WHERE r.receptStapId = :receptStapId"),
   })
 
 public class ReceptStap {

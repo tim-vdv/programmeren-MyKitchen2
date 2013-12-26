@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <title>MyKitchen - Gerechten</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        
+    </head>
+
+
+    <body>
+
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">MyKitchen</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li ><a href="index.html">Home</a></li>
+                        <li class="active"><a href="#">Alle gerechten</a></li>
+                        <li><a href="gerechtenZoeken.html">Gerecht zoeken op ingredient</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <hr/>
+            <h1>Recepten</h1>
+            
+            <div class="navbar-form navbar-left">
+                <input id="tags" placeholder="Recept zoeken...">
+            </div>
+          
+            <hr />
+            <div class="page"></div>
+        </div>
+        
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js" type="text/javascript"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/autocomplete.js"></script>
+        
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        
+        <script src="js/models/recept-model.js"></script>
+        
+        <script src="js/views/recept-view.js"></script>
+        <script src="js/views/recept-detail-view.js"></script>
+        
+        <script src="js/router.js"></script>
+
+        
+
+    <script type="text/template" id="recept-list-template">
+         
+</div>
+    <table class="table striped">
+      <thead>
+        <tr>
+          <th>Naam</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% _.each(recepten, function(recept) { %>
+          <tr>
+            <td><%= recept.get('naam') %></td>
+            <td><a href="#/detail/<%= recept.id %>">Bekijk dit recept</a></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </script>
+  
+  <script type="text/template" id="recept-detail-template">
+      <form class="recept-detail-form">
+      <hr/>
+      <h2><%= recept.get('naam') %></h2> </br> </br>
+      
+      <label>Extra materiaal</label> </br>
+      <label><%= recept.get('extraMateriaal') %></label> </br></br>
+      
+      <label>Receptbeschrijving</label> </br>
+      <label><%= recept.get('receptBeschrijving') %></label> </br></br>
+      
+      <label>Kookbeschrijving</label> </br>
+      <label><%= recept.get('kookBeschrijving') %></label> </br></br>
+      </hr>
+      <a type="Submit" href="index.jsp" class="btn">Terug naar overzicht</a>
+      </form>
+  </script>
+  
+  <script>
+  $(function() {
+    var availableTags = [
+      "Wortelpuree",
+      "Pensen met rode kool"
+    ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  });
+  </script>
+  
+</body>
+</html>

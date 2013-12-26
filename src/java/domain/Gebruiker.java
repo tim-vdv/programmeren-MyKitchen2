@@ -1,5 +1,9 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -30,6 +34,7 @@ public class Gebruiker {
     
     private String koelkast;
     private String favorieten;
+    
 
     public long getId() {
         return id;
@@ -70,8 +75,7 @@ public class Gebruiker {
     public void setFavorieten(String favorieten) {
         this.favorieten = favorieten;
     }
-
-
+    
     @Override
     public int hashCode() {
         int hash = 7;

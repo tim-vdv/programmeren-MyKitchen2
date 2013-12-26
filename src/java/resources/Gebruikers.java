@@ -4,10 +4,14 @@ import domain.Gebruiker;
 import domain.Ingredient;
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
@@ -27,6 +31,9 @@ public class Gebruikers {
     
     @PersistenceContext
     private EntityManager em;
+    
+    @Resource
+    private Validator validator;
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -49,6 +56,22 @@ public class Gebruikers {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addGebruiker(Gebruiker gebruiker)
     {
+        Set<ConstraintViolation<Gebruiker>> violations = validator.validate(gebruiker);
+        if (!violations.isEmpty()) {
+            
+            // Verzamel de foutberichten uit alle ConstraintViolations in één foutbericht.
+            StringBuilder errorMessage = new StringBuilder();
+            for (ConstraintViolation<Gebruiker> violation : violations) {
+                if (errorMessage.length() != 0) {
+                    errorMessage.append(", ");
+                }
+                errorMessage.append(violation.getMessage());
+            }
+            errorMessage.append(".");
+            
+            return Response.status(Response.Status.BAD_REQUEST).entity("Kan gebruiker niet toevoegen: " + errorMessage).build();
+        }
+        
         em.persist(gebruiker);
         return Response.status(Response.Status.CREATED).location(URI.create("/" + gebruiker.getId())).build();
     }
@@ -66,12 +89,26 @@ public class Gebruikers {
 
         em.detach(gebruiker);
         
-        
         gebruiker.setEmail(gebruikerUpdate.getEmail());
         gebruiker.setWachtwoord(gebruikerUpdate.getWachtwoord());
         gebruiker.setFavorieten(gebruikerUpdate.getFavorieten());
         gebruiker.setKoelkast(gebruikerUpdate.getKoelkast());
         
+        Set<ConstraintViolation<Gebruiker>> violations = validator.validate(gebruiker);
+        if (!violations.isEmpty()) {
+            
+            // Verzamel de foutberichten uit alle ConstraintViolations in één foutbericht.
+            StringBuilder errorMessage = new StringBuilder();
+            for (ConstraintViolation<Gebruiker> violation : violations) {
+                if (errorMessage.length() != 0) {
+                    errorMessage.append(", ");
+                }
+                errorMessage.append(violation.getMessage());
+            }
+            errorMessage.append(".");
+            
+            return Response.status(Response.Status.BAD_REQUEST).entity("Kan gebruiker niet wijzigen: " + errorMessage).build();
+        }
         
         em.merge(gebruiker);
         

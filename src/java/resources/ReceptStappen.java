@@ -1,13 +1,18 @@
 package resources;
 
 import domain.Ingredient;
+import domain.Recept;
 import domain.ReceptStap;
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
@@ -28,6 +33,9 @@ public class ReceptStappen {
     
     @PersistenceContext
     private EntityManager em;
+    
+    @Resource
+    private Validator validator;
 
     @GET
     @Path("{receptStapId}")
@@ -42,6 +50,22 @@ public class ReceptStappen {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addReceptStap(ReceptStap receptstap)
     {
+        Set<ConstraintViolation<ReceptStap>> violations = validator.validate(receptstap);
+        if (!violations.isEmpty()) {
+            
+            // Verzamel de foutberichten uit alle ConstraintViolations in één foutbericht.
+            StringBuilder errorMessage = new StringBuilder();
+            for (ConstraintViolation<ReceptStap> violation : violations) {
+                if (errorMessage.length() != 0) {
+                    errorMessage.append(", ");
+                }
+                errorMessage.append(violation.getMessage());
+            }
+            errorMessage.append(".");
+            
+            return Response.status(Response.Status.BAD_REQUEST).entity("Kan receptstap niet toevoegen: " + errorMessage).build();
+        }
+        
         em.persist(receptstap);
         System.out.println("post: " +receptstap);
         return Response.status(Response.Status.CREATED).location(URI.create("/" + receptstap.getReceptId())).build();
@@ -65,6 +89,21 @@ public class ReceptStappen {
         receptstap.setIngredientId(receptstapUpdate.getIngredientId());
         receptstap.setReceptId(receptstapUpdate.getReceptId());
         
+        Set<ConstraintViolation<ReceptStap>> violations = validator.validate(receptstap);
+        if (!violations.isEmpty()) {
+            
+            // Verzamel de foutberichten uit alle ConstraintViolations in één foutbericht.
+            StringBuilder errorMessage = new StringBuilder();
+            for (ConstraintViolation<ReceptStap> violation : violations) {
+                if (errorMessage.length() != 0) {
+                    errorMessage.append(", ");
+                }
+                errorMessage.append(violation.getMessage());
+            }
+            errorMessage.append(".");
+            
+            return Response.status(Response.Status.BAD_REQUEST).entity("Kan receptstap niet wijzigen: " + errorMessage).build();
+        }
         
         em.merge(receptstap);
         

@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @NamedQueries({
@@ -15,10 +18,21 @@ import javax.persistence.NamedQuery;
 public class Recept {
     @Id
     @GeneratedValue
+    @Min(value = 0, message = "een recept moet een positief id hebben")
     private long id;  
+    
+    @NotNull(message = "een recept moet een niet lege naam hebben")
+    @Size(min = 1, message = "een recept moet een niet lege naam hebben")
     private String Naam;
+    
+    @NotNull(message = "een recept moet een niet lege receptbeschrijving hebben")
+    @Size(min = 1, message = "een recept moet een niet lege receptbeschrijving hebben")
     private String receptBeschrijving;
+    
     private String ExtraMateriaal;
+    
+    @NotNull(message = "een recept moet een niet lege kookbeschrijving hebben")
+    @Size(min = 1, message = "een recept moet een niet lege kookbeschrijving hebben")
     private String kookBeschrijving;
 
     public long getId() {

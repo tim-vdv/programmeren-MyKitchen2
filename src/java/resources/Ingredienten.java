@@ -3,10 +3,14 @@ package resources;
 import domain.Ingredient;
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
@@ -27,6 +31,9 @@ public class Ingredienten {
     
     @PersistenceContext
     private EntityManager em;
+    
+    @Resource
+    private Validator validator;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -39,8 +46,23 @@ public class Ingredienten {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addIngredient(Ingredient ingredient)
     {
+        Set<ConstraintViolation<Ingredient>> violations = validator.validate(ingredient);
+        if (!violations.isEmpty()) {
+            
+            // Verzamel de foutberichten uit alle ConstraintViolations in één foutbericht.
+            StringBuilder errorMessage = new StringBuilder();
+            for (ConstraintViolation<Ingredient> violation : violations) {
+                if (errorMessage.length() != 0) {
+                    errorMessage.append(", ");
+                }
+                errorMessage.append(violation.getMessage());
+            }
+            errorMessage.append(".");
+            
+            return Response.status(Status.BAD_REQUEST).entity("Kan ingredient niet toevoegen: " + errorMessage).build();
+        }
+        
         em.persist(ingredient);
-        System.out.println("post: " +ingredient);
         return Response.status(Response.Status.CREATED).location(URI.create("/" + ingredient.getId())).build();
     }
     
@@ -61,6 +83,21 @@ public class Ingredienten {
             ingredient.setNaam(ingredientUpdate.getNaam());
         }
         
+        Set<ConstraintViolation<Ingredient>> violations = validator.validate(ingredient);
+        if (!violations.isEmpty()) {
+            
+            // Verzamel de foutberichten uit alle ConstraintViolations in één foutbericht.
+            StringBuilder errorMessage = new StringBuilder();
+            for (ConstraintViolation<Ingredient> violation : violations) {
+                if (errorMessage.length() != 0) {
+                    errorMessage.append(", ");
+                }
+                errorMessage.append(violation.getMessage());
+            }
+            errorMessage.append(".");
+            
+            return Response.status(Status.BAD_REQUEST).entity("Kan ingredient niet wijzigen: " + errorMessage).build();
+        }
         
         em.merge(ingredient);
         

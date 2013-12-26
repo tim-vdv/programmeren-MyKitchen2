@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @NamedQueries({
@@ -14,9 +17,17 @@ import javax.persistence.NamedQuery;
 public class Gebruiker {
     
     @Id @GeneratedValue
+    @Min(value = 0, message = "een gebruiker moet een positief id hebben")
     private long id;
+    
+    @NotNull(message = "een gebruiker moet een niet lege email hebben")
+    @Size(min = 1, message = "een gebruiker moet een niet lege email hebben")
     private String email;
+    
+    @NotNull(message = "een gebruiker moet een niet lege wachtwoord hebben")
+    @Size(min = 1, message = "een gebruiker moet een niet lege wachtwoord hebben")
     private String wachtwoord;
+    
     private String koelkast;
     private String favorieten;
 

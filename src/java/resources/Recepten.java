@@ -1,14 +1,19 @@
 package resources;
 
+import domain.Gebruiker;
 import domain.Ingredient;
 import domain.Recept;
 import domain.ReceptStap;
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
@@ -30,6 +35,9 @@ public class Recepten {
     @PersistenceContext
     private EntityManager em;
     
+    @Resource
+    private Validator validator;
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Recept> getAllRecepten(){
@@ -41,6 +49,22 @@ public class Recepten {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addRecept(Recept recept)
     {
+        Set<ConstraintViolation<Recept>> violations = validator.validate(recept);
+        if (!violations.isEmpty()) {
+            
+            // Verzamel de foutberichten uit alle ConstraintViolations in één foutbericht.
+            StringBuilder errorMessage = new StringBuilder();
+            for (ConstraintViolation<Recept> violation : violations) {
+                if (errorMessage.length() != 0) {
+                    errorMessage.append(", ");
+                }
+                errorMessage.append(violation.getMessage());
+            }
+            errorMessage.append(".");
+            
+            return Response.status(Response.Status.BAD_REQUEST).entity("Kan recept niet toevoegen: " + errorMessage).build();
+        }
+        
         em.persist(recept);
         System.out.println("post: " +recept);
         return Response.status(Response.Status.CREATED).location(URI.create("/" + recept.getId())).build();
@@ -71,6 +95,22 @@ public class Recepten {
             recept.setReceptBeschrijving(receptUpdate.getReceptBeschrijving());
         }
         
+        
+        Set<ConstraintViolation<Recept>> violations = validator.validate(recept);
+        if (!violations.isEmpty()) {
+            
+            // Verzamel de foutberichten uit alle ConstraintViolations in één foutbericht.
+            StringBuilder errorMessage = new StringBuilder();
+            for (ConstraintViolation<Recept> violation : violations) {
+                if (errorMessage.length() != 0) {
+                    errorMessage.append(", ");
+                }
+                errorMessage.append(violation.getMessage());
+            }
+            errorMessage.append(".");
+            
+            return Response.status(Response.Status.BAD_REQUEST).entity("Kan recept niet wijzigen: " + errorMessage).build();
+        }
         
         em.merge(recept);
         

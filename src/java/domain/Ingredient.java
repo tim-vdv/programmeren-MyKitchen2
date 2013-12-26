@@ -5,6 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import static javax.swing.text.StyleConstants.Size;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @NamedQueries({
@@ -14,7 +18,11 @@ import javax.persistence.NamedQuery;
 public class Ingredient {
     
     @Id @GeneratedValue
+    @Min(value = 0, message = "een ingredient moet een positief id hebben")
     private long id;
+    
+    @NotNull(message = "een ingredient moet een niet lege naam hebben")
+    @Size(min = 1, message = "een ingredient moet een niet lege naam hebben")
     private String naam;
 
     public long getId() {

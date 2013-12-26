@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @NamedQueries({
@@ -16,10 +19,14 @@ import javax.persistence.NamedQuery;
 public class ReceptStap {
     
     @Id @GeneratedValue
+    @Min(value = 0, message = "een receptstap moet een positief id hebben")
     private long receptStapId;
+
     private long receptId;
+
     private long ingredientId;
     private long informatieId;
+
     private long hoeveelheid;
 
     public long getReceptStapId() {

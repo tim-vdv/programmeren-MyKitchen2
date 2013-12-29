@@ -28,6 +28,9 @@ public class ReceptStap {
     private long informatieId;
 
     private long hoeveelheid;
+    
+    private String eenheid;
+    
 
     public long getReceptStapId() {
         return receptStapId;
@@ -69,6 +72,15 @@ public class ReceptStap {
         this.hoeveelheid = hoeveelheid;
     }
 
+    public String getEenheid() {
+        return eenheid;
+    }
+
+    public void setEenheid(String eenheid) {
+        this.eenheid = eenheid;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 7;

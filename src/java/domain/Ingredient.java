@@ -24,7 +24,7 @@ public class Ingredient {
     @NotNull(message = "een ingredient moet een niet lege naam hebben")
     @Size(min = 1, message = "een ingredient moet een niet lege naam hebben")
     private String naam;
-
+    
     public long getId() {
         return id;
     }
@@ -40,7 +40,7 @@ public class Ingredient {
     public void setNaam(String naam) {
         this.naam = naam;
     }
-
+ 
     @Override
     public int hashCode() {
         int hash = 7;

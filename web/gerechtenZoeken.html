@@ -42,7 +42,9 @@
         <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-
+        <script src="js/models/ingredient-model.js"></script>
+        <script src="js/views/ingredient-view.js"></script>
+        <script src="js/router/ingredient-router.js"></script>
 
     <script type="text/template" id="ingredient-list-template">
     <table class="table striped" >
@@ -67,50 +69,5 @@
       </tbody>
     </table>
   </script>
-
-
-
-
-<script>
-var Ingredienten = Backbone.Collection.extend({
-    url: 'api/ingredienten'
-});
-
-var Ingredient = Backbone.Model.extend({
-    urlRoot: 'api/ingredienten'
-});
-
-var IngredientList = Backbone.View.extend({
-    el: '.page',
-    render: function() {
-        var that = this;
-        var ingredienten = new Ingredienten();
-        ingredienten.fetch({
-            success: function(ingredienten) {
-                var template = _.template($('#ingredient-list-template').html(), {ingredienten: ingredienten.models});
-                that.$el.html(template);
-               }
-        });
-    }
-});
-
-var ingredientList = new IngredientList();
-
-
-
-var Router = Backbone.Router.extend({
-    routes: {
-        "": "gerecht zoeken"
-    }
-});
-
-var router = new Router();
-router.on('route:gerecht zoeken', function() {
-    ingredientList.render();
-});
-
-Backbone.history.start();
-</script>
-
     </body>
 </html>

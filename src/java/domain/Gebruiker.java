@@ -35,6 +35,10 @@ public class Gebruiker {
     private String koelkast;
     private String favorieten;
     
+    @NotNull(message = "een gebruiker moet een niet lege role hebben")
+    @Size(min = 1, message = "een gebruiker moet een niet lege role hebben")
+    private String gebruikerRole;
+    
 
     public long getId() {
         return id;
@@ -74,6 +78,14 @@ public class Gebruiker {
 
     public void setFavorieten(String favorieten) {
         this.favorieten = favorieten;
+    }
+
+    public String getGebruikerRole() {
+        return gebruikerRole;
+    }
+
+    public void setGebruikerRole(String gebruikerRole) {
+        this.gebruikerRole = gebruikerRole;
     }
     
     @Override

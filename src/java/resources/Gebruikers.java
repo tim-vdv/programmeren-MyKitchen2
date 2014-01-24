@@ -93,6 +93,7 @@ public class Gebruikers {
         gebruiker.setWachtwoord(gebruikerUpdate.getWachtwoord());
         gebruiker.setFavorieten(gebruikerUpdate.getFavorieten());
         gebruiker.setKoelkast(gebruikerUpdate.getKoelkast());
+        gebruiker.setGebruikerRole(gebruikerUpdate.getGebruikerRole());
         
         Set<ConstraintViolation<Gebruiker>> violations = validator.validate(gebruiker);
         if (!violations.isEmpty()) {

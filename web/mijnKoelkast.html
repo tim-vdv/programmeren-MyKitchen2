@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>MyKitchen - Home </title>
+        <title>MyKitchen - Mijn koelkast </title>
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
     </head>
@@ -17,14 +17,14 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">MyKitchen</a>
+                    <a class="navbar-brand" href="index.html">MyKitchen</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav pull-left">
-                        <li class="active"><a href="#">Home</a></li>
+                        <li ><a href="index.html">Home</a></li>
                         <li><a href="gerechten.html">Alle gerechten</a></li>
                         <li><a href="gerechtenZoeken.html">Gerecht zoeken op ingredient</a></li>
-                        <li id="vis_koelkast" ><a href="mijnKoelkast.html">Mijn koelkast</a></li>
+                        <li class="active" id="vis_koelkast" ><a href="mijnKoelkast.html">Mijn koelkast</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav pull-right">
@@ -72,9 +72,11 @@
         <div class="container">
 
             <div class="starter-template">
-                <h1>MyKitchen</h1>
+                <h1>Wat zit er in je koelkast?</h1>
                 <div id="visibletest">Test</div>
-                <p class="lead">De applicatie voor het zoeken van gerechten!</p>
+                <p class="lead">Selecteer alle ingrediënten die in je koelkast zitten, zo kan je snel een recept zoeken!</p>
+                <div class="page1"></div>
+                <div class="page"></div>
             </div>
 
         </div>
@@ -91,6 +93,23 @@
         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="js/login.js"></script>
-        <script src="js/models/gebruiker-model.js"></script>
+        <script src="js/models/ingredient-model.js"></script>
+         <script src="js/views/ingredient-view.js"></script>
+        <script src="js/router/ingredient-router.js"></script>
+
+      <script type="text/template" id="ingredient-list-template">
+         
+</div>
+<label>Alle ingrediënten</label> </br>
+     <select multiple class="form-control">
+        <% _.each(ingredienten, function(ingredient) { %>             
+          <option><%= ingredient.get('naam') %></option>
+        <% }); %>
+        </select></br>
+        
+<label>Reeds in de koelkast</label> </br>
+<button>Recept zoeken</button>
+  </script>
+  
     </body>
 </html>

@@ -10,7 +10,7 @@ function registreer(){
 
         }
         else{
-            gebruiker.save({"email": email,"wachtwoord":wachtwoord});
+            gebruiker.save({"email": email,"wachtwoord":wachtwoord,"gebruikerRole":"gebruiker"});
             alert("Dag " + email + ", " + "u bent succesvol geregistreerd.");
             window.location = "index.html";
         }

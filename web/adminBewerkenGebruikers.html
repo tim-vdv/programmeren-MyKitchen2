@@ -63,7 +63,7 @@
             <div class="navbar-form navbar-left">
              
             </div>
-            <div class="page"></div>
+            <div class="page1"></div>
         </div>
         
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
@@ -94,6 +94,7 @@
           <th>Id</th>
           <th>Email</th>
           <th>Wachtwoord</th>
+          <th>Role</th>
       </thead>
       <tbody>
         <% _.each(gebruiker, function(gebruiker) { %>
@@ -101,6 +102,7 @@
             <td><%= gebruiker.get('id') %></td>
             <td><%= gebruiker.get('email') %></td>
             <td><%= gebruiker.get('wachtwoord') %></td>
+            <td><%= gebruiker.get('gebruikerRole') %></td>
             <td> 
             <a href="#/gebruikers/<%= gebruiker.id %>">
                 <button type="button" class="btn btn-default btn-sm">
@@ -125,6 +127,14 @@
       
       <label>Wachtwoord</label> </br>
       <input id="wachtwoord" name="wachtwoord" value="<%= gebruiker.get('wachtwoord') %>" style="width:360px"/></br></br>
+      
+      <label>Role</label> </br>
+      
+      <select id="gebruikerRole" class="form-control" style="width: 360px">
+        <option><%= gebruiker.get('gebruikerRole') %></option>
+        <option>admin</option>
+        <option>gebruiker</option>
+      </select></br></br>
       
       </hr>
         <button onclick="saveGebruiker(<%= gebruiker.id %>)" type="button" class="btn btn-default">

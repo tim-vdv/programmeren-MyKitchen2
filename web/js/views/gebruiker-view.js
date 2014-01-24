@@ -1,5 +1,5 @@
 GebruikerList = Backbone.View.extend({
-    el: '.page',
+    el: '.page1',
     render: function() {
         var that = this;
         var gebruikers = new Gebruikers();
